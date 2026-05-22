@@ -464,12 +464,12 @@
         }
         #hidden-code {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 6rem;
             color: #a855f7;
             font-weight: bold;
             opacity: 0;
             text-shadow: 0 0 20px #c084fc;
             transition: opacity 0.5s;
+            text-align: center;
         }
         .code-visible { opacity: 1 !important; }
 
@@ -748,7 +748,7 @@
             background: rgba(255,255,255,0.4);
         }
         .sock-striped {
-            background: repeating-linear-gradient(45deg, #3b82f6 0px, #3b82f6 4px, #eff6ff 4px, #eff6ff 8px);
+            background: repeating-linear-gradient(45deg, #3b82f6 0px, #3b82f6 4px, #eff6ff 4px, #eff6ff 12px);
             border-color: #1e3a8a;
         }
         .sock-dotted {
@@ -1069,7 +1069,7 @@
                 </div>
 
                 <div id="uv-light-area" class="interactable">
-                    <div id="hidden-code">7492</div>
+                    <div id="hidden-code" class="text-2xl sm:text-4xl md:text-5xl uppercase tracking-wider px-4">SOCKS HAVE SOLES</div>
                 </div>
             </div>
         </div>
@@ -1187,7 +1187,7 @@
                                 <div class="pile-item-undies undies-dark" style="top: 1px; left: 120px; transform: rotate(-5deg);"></div>
                                 <div class="pile-item-undies undies-striped" style="top: 16px; left: 20px; transform: rotate(-45deg);"></div>
                                 <div class="pile-item-undies undies-pink" style="top: 18px; left: 100px; transform: rotate(20deg);"></div>
-                                <div class="pile-item-undies undies-striped" style="top: 20px; left: 150px; transform: rotate(-10deg);"></div>
+                                <div class="pile-item-undies undies-striped" style="top: 20px; left: 150px; transform: rotate(-10deg5);"></div>
                             </div>
                         </div>
                         <div id="ns-drawer-2-front" class="absolute inset-0 bg-amber-800 border-t border-amber-700 flex items-center justify-center cursor-pointer transition-transform duration-500 ease-in-out z-20" onclick="toggleNSDrawer(2)">
@@ -2016,7 +2016,7 @@
                         } else {
                             uvArea.classList.toggle('uv-active');
                             document.getElementById('hidden-code').classList.toggle('code-visible');
-                            showStatus("The UV light shines, revealing glowing hidden numbers.");
+                            showStatus("The uv light shines, revealing a mystical hidden message");
                         }
                     } else if (state.ceilingLightOn) {
                         showStatus("The ceiling light is bright, but there might be invisible clues hiding in the shadows.");
@@ -2286,8 +2286,6 @@
             document.getElementById('keypad-display').innerText = state.currentPadInput.padEnd(4, '-');
         }
 
-        // Main exit door is unutilized as escape now happens via tapestry chalk door,
-        // but keeping it with locked status message.
         function checkCode() {
             if (state.currentPadInput === "7492") {
                 document.getElementById('keypad-display').style.color = "#34d399";
@@ -2326,7 +2324,6 @@
             document.getElementById('safe-display').innerText = state.currentSafeInput.padEnd(4, '-');
         }
 
-        // Safe code successfully unlocked -> flashlight obtained
         function checkSafeCode() {
             if (state.currentSafeInput === "3820") {
                 document.getElementById('safe-display').style.color = "#10b981"; // emerald-500

@@ -20,6 +20,7 @@
             width: 100vw;
             height: 100vh;
             display: flex;
+            flex-grow: 1;
             flex-direction: column;
         }
 
@@ -435,7 +436,7 @@
             position: absolute;
             top: -5px; right: -5px;
             width: 60px; height: 60px;
-            background: linear-gradient(225deg, #0f172a 50%, #7f1d1d 50%);
+            background: linear-gradient(225deg, #111827 50%, #7f1d1d 50%);
             border-left: 3px solid #450a0a;
             border-bottom: 3px solid #450a0a;
         }
@@ -533,7 +534,7 @@
             height: 4px;
             background: #0f172a;
             border-radius: 1px;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.55);
         }
 
         /* UI Elements */
@@ -563,7 +564,7 @@
             justify-content: center;
             padding: 0 10px;
             gap: 12px;
-            z-index: 50;
+            z-index: 150; /* Raised from 50 to 150 to sit above closeups/modals */
         }
 
         .inv-slot {
@@ -681,21 +682,63 @@
 
         /* Shining glowing animation for powered flashlight item icon */
         .glowing-flash {
-            filter: drop-shadow(0 0 8px #fde047);
-            animation: pulse-glow 2s infinite ease-in-out;
+            filter: drop-shadow(0 0 10px #fbbf24);
+            animation: pulse-glow 1.5s infinite ease-in-out;
         }
         @keyframes pulse-glow {
-            0%, 100% { filter: drop-shadow(0 0 4px #fde047); }
-            50% { filter: drop-shadow(0 0 12px #fde047); }
+            0%, 100% { filter: drop-shadow(0 0 4px #fbbf24); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 16px #fbbf24); transform: scale(1.08); }
         }
 
-        /* Styled unkempt laundry / drawer clutter shapes */
+        /* Styled highly-detailed organic laundry shapes */
+        .drawer-clothes-pile {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .sock-vector {
+            position: absolute;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .undies-vector {
+            position: absolute;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Handwritten Occult Note Skew/Vibe Modal */
+        #note-paper {
+            background-color: #faf5e6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(139,92,246,0.03) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(217,119,6,0.04) 0%, transparent 50%);
+            border: 1px solid #dcd3b8;
+            box-shadow: 
+                0 15px 35px rgba(0,0,0,0.4),
+                inset 0 0 40px rgba(180,140,80,0.15),
+                0 2px 2px #eae3ce,
+                2px 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            font-family: 'Georgia', 'Caveat', 'Segoe Print', cursive, serif;
+            color: #2c1a04;
+        }
+
+        /* Obscure diagrams */
+        .parchment-border {
+            border: 2px solid #5c4a37;
+            position: absolute;
+            inset: 8px;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        /* Styled highly-detailed unkempt laundry shapes with shadow depth */
         .pile-item-sock {
             position: absolute;
             width: 38px;
             height: 22px;
-            background-color: #fca5a5;
-            border: 2px solid #7f1d1d;
+            background-color: #e2e8f0;
+            border: 2px solid #475569;
             border-radius: 12px 12px 4px 12px; /* Curves out to look like a curled sock */
             box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
             cursor: pointer;
@@ -710,13 +753,13 @@
             background: rgba(255,255,255,0.4);
         }
         .sock-striped {
-            background: repeating-linear-gradient(45deg, #3b82f6, #3b82f6 4px, #eff6ff 4px, #eff6ff 8px);
+            background: repeating-linear-gradient(45deg, #3b82f6 0px, #3b82f6 4px, #eff6ff 4px, #eff6ff 8px);
             border-color: #1e3a8a;
         }
         .sock-dotted {
             background-color: #10b981;
-            background-image: radial-gradient(#ecfdf5 1.5px, transparent 1.5px);
-            background-size: 6px 6px;
+            background-image: radial-gradient(#ecfdf5 2px, transparent 2px);
+            background-size: 8px 8px;
             border-color: #064e3b;
         }
         .sock-yellow {
@@ -724,8 +767,8 @@
             border-color: #78350f;
         }
         .sock-purple {
-            background: repeating-linear-gradient(-45deg, #8b5cf6, #8b5cf6 4px, #f5f3ff 4px, #f5f3ff 8px);
-            border-color: #4c1d95;
+            background: repeating-linear-gradient(-45deg, #a855f7 0px, #a855f7 5px, #f3e8ff 5px, #f3e8ff 10px);
+            border-color: #581c87;
         }
         .sock-orange {
             background-color: #f97316;
@@ -747,6 +790,73 @@
             top: 0; left: 0; right: 0; height: 5px;
             background: rgba(255,255,255,0.3);
             border-radius: 2px 2px 0 0;
+        }
+        .undies-pink { background-color: #ec4899; border: 2px solid #be185d; }
+        .undies-dark { background-color: #1f2937; border: 2px solid #111827; }
+        .undies-green { background-color: #10b981; border: 2px solid #047857; }
+        .undies-striped {
+            background: repeating-linear-gradient(90deg, #6b7280 0px, #6b7280 8px, #374151 8px, #374151 16px);
+            border: 2px solid #111827;
+        }
+
+        /* Chalk Sketching Door Outline Animations */
+        @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+        }
+        .drawn-door-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 3.5s ease-in-out forwards;
+        }
+
+        /* Magical Glowing runes on chalked gateway */
+        .glowing-rune {
+            text-shadow: 0 0 10px #fbbf24, 0 0 20px #fbbf24;
+            animation: rune-pulse 2s infinite ease-in-out;
+        }
+        @keyframes rune-pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.95; transform: scale(1.15); }
+        }
+
+        /* Scenic outdoor background reveal */
+        .outdoor-bg {
+            background: radial-gradient(circle at 50% 30%, #38bdf8 0%, #0284c7 50%, #0369a1 100%);
+            position: relative;
+        }
+        .grass-hill {
+            position: absolute;
+            bottom: 0;
+            width: 150%;
+            height: 40%;
+            background: radial-gradient(circle at 50% 0%, #22c55e 0%, #15803d 70%);
+            border-radius: 50% 50% 0 0;
+            transform: rotate(-3deg);
+        }
+        .grass-hill-2 {
+            position: absolute;
+            bottom: -10%;
+            left: -20%;
+            width: 140%;
+            height: 45%;
+            background: radial-gradient(circle at 40% 0%, #4ade80 0%, #16a34a 80%);
+            border-radius: 55% 45% 0 0;
+            transform: rotate(5deg);
+        }
+        .scenic-sun {
+            position: absolute;
+            top: 15%;
+            left: 55%;
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle at center, #ffffff 0%, #fef08a 40%, rgba(253,224,71,0) 100%);
+            filter: drop-shadow(0 0 25px #fef08a);
+            border-radius: 50%;
+            animation: sun-glow 4s infinite ease-in-out;
+        }
+        @keyframes sun-glow {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px #fef08a); }
+            50% { transform: scale(1.15); filter: drop-shadow(0 0 40px #fef08a); }
         }
 
     </style>
@@ -872,25 +982,63 @@
                 </div>
             </div>
 
-            <!-- View 3: WEST (Red Rug & Tapestry) -->
+            <!-- View 3: WEST (Red Rug & Tapestry & Hidden Door) -->
             <div id="view-3" class="room-view">
-                <div id="hidden-key" class="interactable absolute flex items-center justify-center" onclick="interact('key', event)" style="bottom: 25%; left: 60%; font-size: 2.5rem; display: none; z-index: 5; text-shadow: 0 0 15px #fbbf24; transform: rotate(15deg);">🔑</div>
+                <!-- The Small Key is flat on the floor, shown under the folded rug corner crease -->
+                <div id="hidden-key" class="interactable absolute flex items-center justify-center" onclick="interact('key', event)" style="bottom: 21%; left: 56%; font-size: 2.5rem; display: none; z-index: 12; text-shadow: 0 0 15px #fbbf24; transform: rotate(15deg);">🔑</div>
                 
-                <!-- Strange Tapestry on the Wall -->
-                <div id="tapestry" class="interactable absolute flex flex-col items-center" style="top: 15%; left: 35%; width: 120px; height: 185px; z-index: 5; transition: transform 0.5s ease-in-out;" onclick="interact('tapestry', event)" title="Strange Tapestry">
-                    <div class="w-full h-full bg-indigo-950 border-4 border-amber-800 rounded shadow-2xl relative overflow-hidden flex flex-col justify-between p-2">
-                        <!-- Rod Hanger -->
-                        <div class="absolute top-0 inset-x-0 h-1.5 bg-yellow-600"></div>
-                        <!-- Mystic Moon -->
-                        <div class="flex-grow flex items-center justify-center text-5xl opacity-60 select-none">🌙</div>
-                        <!-- Border Framing -->
-                        <div class="border border-dashed border-yellow-600/40 h-5 w-full text-[9px] font-serif text-yellow-600/50 text-center uppercase tracking-widest select-none pt-0.5">FATE</div>
+                <!-- Hidden Door Outline Container -->
+                <div id="tapestry-engraving" class="absolute opacity-0 transition-opacity duration-500 flex flex-col items-center justify-center overflow-hidden" style="top: 8%; left: 50%; margin-left: -110px; width: 220px; height: 320px; border: 4px dashed #334155; border-bottom: none; border-radius: 110px 110px 0 0; background: rgba(0,0,0,0.2);" onclick="interact('tapestry-door', event)">
+                    <!-- Canvas Drawing Overlay for Magical Chalk sketch effect -->
+                    <svg id="chalk-draw-svg" class="absolute inset-0 w-full h-full pointer-events-none hidden" viewBox="0 0 220 320">
+                        <path id="chalk-path" class="drawn-door-path" d="M10,320 V110 A100,100 0 0,1 210,110 V320" fill="none" stroke="#e0f2fe" stroke-width="6" stroke-linecap="round" />
+                    </svg>
+
+                    <!-- Beautiful Sunny Outdoor Landscape Escape Portal -->
+                    <div id="outdoor-reveal" class="absolute inset-0 outdoor-bg hidden transition-all duration-1000 opacity-0 flex flex-col items-center justify-center cursor-pointer" onclick="escapeDungeon(event)">
+                        <div class="scenic-sun"></div>
+                        <div class="grass-hill"></div>
+                        <div class="grass-hill-2"></div>
+                        
+                        <!-- Floating golden particle circles -->
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none text-white font-serif font-bold text-lg select-none">
+                            <span class="absolute top-[25%] left-[25%] glowing-rune text-yellow-300">ᛗ</span>
+                            <span class="absolute top-[35%] right-[20%] glowing-rune text-yellow-300">᚛</span>
+                            <span class="absolute bottom-[35%] left-[20%] glowing-rune text-yellow-300">ᚠ</span>
+                            <span class="absolute bottom-[40%] right-[30%] glowing-rune text-yellow-300">ᛋ</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Hidden Engraving behind Tapestry -->
-                <div id="tapestry-engraving" class="absolute font-mono text-xs text-slate-500 font-bold opacity-0 transition-opacity duration-300 pointer-events-none" style="top: 25%; left: 38%; width: 100px; text-shadow: 0 1px 2px rgba(0,0,0,0.8); line-height: 1.3;">
-                    "Peel the ugly rug corners"
+                <!-- Strange Occult Tapestry on the Wall -->
+                <div id="tapestry" class="interactable absolute flex flex-col items-center" style="top: 8%; left: 50%; margin-left: -110px; width: 220px; height: 320px; z-index: 15; transition: transform 0.5s ease-in-out; transform-origin: top left;" onclick="interact('tapestry', event)" title="Strange Tapestry">
+                    <div class="w-full h-full bg-slate-900 border-8 border-double border-amber-900 rounded-b shadow-2xl relative overflow-hidden flex flex-col justify-between p-4">
+                        <!-- Hanging Rod Bar -->
+                        <div class="absolute top-0 inset-x-0 h-2 bg-amber-800 shadow"></div>
+                        <!-- Intricate Cosmic Web / Alchemical Mandala -->
+                        <svg class="absolute inset-0 w-full h-full p-6 opacity-30 stroke-amber-500 pointer-events-none" viewBox="0 0 100 150" fill="none" stroke-width="0.5">
+                            <circle cx="50" cy="75" r="35" stroke-dasharray="2,2"/>
+                            <circle cx="50" cy="75" r="25"/>
+                            <circle cx="50" cy="75" r="15"/>
+                            <!-- Radiating Lines -->
+                            <line x1="50" y1="20" x2="50" y2="130" />
+                            <line x1="15" y1="75" x2="85" y2="75" />
+                            <line x1="25" y1="40" x2="75" y2="110" />
+                            <line x1="75" y1="40" x2="25" y2="110" />
+                            <!-- Mystic Triangles -->
+                            <polygon points="50,40 20,95 80,95" />
+                            <polygon points="50,110 20,55 80,55" />
+                        </svg>
+                        <!-- Center Glowing Eye -->
+                        <div class="flex-grow flex items-center justify-center text-6xl opacity-75 select-none relative z-10 filter drop-shadow-[0_0_8px_rgba(217,119,6,0.5)]">👁️‍🗨️</div>
+                        <!-- Occult Runes / Glyphs -->
+                        <div class="flex justify-between px-2 text-amber-600/60 font-serif text-[11px] tracking-widest select-none relative z-10">
+                            <span>🜁</span>
+                            <span>🜃</span>
+                            <span>🜄</span>
+                            <span>🜂</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="rug" class="interactable" onclick="interact('rug', event)"></div>
@@ -920,7 +1068,7 @@
             </div>
         </div>
 
-        <!-- Inventory Bar (Extended to 8 Slots) -->
+        <!-- Inventory Bar (Extended to 8 Slots, z-index raised to 150) -->
         <div id="inventory-bar">
             <div id="inv-1" class="inv-slot" onclick="selectSlot(0)"></div>
             <div id="inv-2" class="inv-slot" onclick="selectSlot(1)"></div>
@@ -972,10 +1120,10 @@
 
         <!-- Nightstand Modal -->
         <div id="nightstand-modal" class="modal-overlay" onclick="closeModals()">
-            <div id="nightstand-content" class="bg-amber-900 p-4 sm:p-6 rounded-xl border-8 border-amber-950 w-[80vw] max-w-sm h-[42vh] flex flex-col gap-4 shadow-2xl relative" onclick="event.stopPropagation()">
+            <div class="bg-amber-900 p-4 sm:p-6 rounded-xl border-8 border-amber-950 w-[80vw] max-w-sm h-[42vh] flex flex-col gap-4 shadow-2xl relative" onclick="event.stopPropagation()">
                 <div class="close-btn" onclick="closeModals()">X</div>
 
-                <!-- Barely visible clickable crack at the absolute bottom corner to look at the back of the nightstand -->
+                <!-- Clickable crack to look at the back of the nightstand -->
                 <div id="ns-crack" class="ns-crack" onclick="flipNightstand(event)" title="Examine crack"></div>
 
                 <!-- Front Side View -->
@@ -986,20 +1134,28 @@
                             <!-- High-contrast bouncing Spiderweb Duster beneath socks pile -->
                             <div id="duster-item" class="absolute text-3xl cursor-pointer select-none transition-all duration-500 opacity-0 scale-0 z-10 bg-slate-900/95 border-2 border-dashed border-amber-500/50 p-2 rounded-full shadow-[0_0_15px_rgba(251,191,36,0.3)] hover:border-amber-400" style="bottom: 12px; left: calc(50% - 24px);" onclick="interact('duster', event)">🧹</div>
                             
-                            <!-- Overlapping, unkempt paired socks (12 items) -->
-                            <div id="socks-drawer-container" class="absolute inset-0">
-                                <div class="pile-item-sock bg-red-500 border-red-800" style="top: 8px; left: 12px; transform: rotate(-25deg);" onclick="moveSocks(event)"></div>
-                                <div class="pile-item-sock sock-striped" style="top: 6px; left: 34px; transform: rotate(15deg);" onclick="moveSocks(event)"></div>
-                                <div class="pile-item-sock sock-dotted" style="top: 14px; left: 58px; transform: rotate(-40deg);" onclick="moveSocks(event)"></div>
-                                <div class="pile-item-sock sock-yellow" style="top: 10px; left: 82px; transform: rotate(5deg);" onclick="moveSocks(event)"></div>
-                                <div class="pile-item-sock bg-slate-400 border-slate-600" style="top: 12px; left: 108px; transform: rotate(45deg);" onclick="moveSocks(event)"></div>
-                                <div class="pile-item-sock sock-purple" style="top: 5px; left: 132px; transform: rotate(-20deg);" onclick="moveSocks(event)"></div>
-                                <div class="pile-item-sock sock-orange" style="top: 16px; left: 162px; transform: rotate(35deg);" onclick="moveSocks(event)"></div>
-                                <div class="pile-item-sock bg-rose-400 border-rose-600" style="top: 20px; left: 22px; transform: rotate(60deg);" onclick="moveSocks(event)"></div>
-                                <div class="pile-item-sock sock-striped" style="top: 18px; left: 68px; transform: rotate(-15deg);" onclick="moveSocks(event)"></div>
-                                <div class="pile-item-sock bg-teal-500 border-teal-800" style="top: 22px; left: 112px; transform: rotate(-70deg);" onclick="moveSocks(event)"></div>
-                                <div class="pile-item-sock bg-zinc-600 border-zinc-800" style="top: 16px; left: 142px; transform: rotate(10deg);" onclick="moveSocks(event)"></div>
-                                <div class="pile-item-sock sock-striped" style="top: 18px; left: 172px; transform: rotate(85deg);" onclick="moveSocks(event)"></div>
+                            <!-- Overlapping, unkempt paired socks (20 items - typical full drawer) -->
+                            <div id="socks-drawer-container" class="drawer-clothes-pile" onclick="moveSocks(event)">
+                                <div class="pile-item-sock bg-red-500 border-red-800 animate-pulse" style="top: 8px; left: 12px; transform: rotate(-25deg);"></div>
+                                <div class="pile-item-sock sock-striped" style="top: 6px; left: 34px; transform: rotate(15deg);"></div>
+                                <div class="pile-item-sock sock-dotted" style="top: 14px; left: 58px; transform: rotate(-40deg);"></div>
+                                <div class="pile-item-sock sock-yellow" style="top: 10px; left: 82px; transform: rotate(5deg);"></div>
+                                <div class="pile-item-sock bg-slate-400 border-slate-600" style="top: 12px; left: 108px; transform: rotate(45deg);"></div>
+                                <div class="pile-item-sock sock-purple" style="top: 5px; left: 132px; transform: rotate(-20deg);"></div>
+                                <div class="pile-item-sock sock-orange" style="top: 16px; left: 162px; transform: rotate(35deg);"></div>
+                                <div class="pile-item-sock bg-rose-400 border-rose-600" style="top: 20px; left: 22px; transform: rotate(60deg);"></div>
+                                <div class="pile-item-sock sock-striped" style="top: 18px; left: 68px; transform: rotate(-15deg);"></div>
+                                <div class="pile-item-sock bg-teal-500 border-teal-800" style="top: 22px; left: 112px; transform: rotate(-70deg);"></div>
+                                <div class="pile-item-sock bg-zinc-600 border-zinc-800" style="top: 16px; left: 142px; transform: rotate(10deg);"></div>
+                                <div class="pile-item-sock sock-striped" style="top: 18px; left: 172px; transform: rotate(85deg);"></div>
+                                <div class="pile-item-sock sock-dotted" style="top: 10px; left: 20px; transform: rotate(-10deg);"></div>
+                                <div class="pile-item-sock bg-pink-500 border-pink-800" style="top: 12px; left: 50px; transform: rotate(25deg);"></div>
+                                <div class="pile-item-sock sock-purple" style="top: 8px; left: 90px; transform: rotate(-35deg);"></div>
+                                <div class="pile-item-sock sock-yellow" style="top: 15px; left: 120px; transform: rotate(50deg);"></div>
+                                <div class="pile-item-sock bg-blue-600 border-blue-900" style="top: 4px; left: 150px; transform: rotate(-5deg);"></div>
+                                <div class="pile-item-sock sock-striped" style="top: 22px; left: 45px; transform: rotate(110deg);"></div>
+                                <div class="pile-item-sock sock-orange" style="top: 24px; left: 95px; transform: rotate(-95deg);"></div>
+                                <div class="pile-item-sock sock-dotted" style="top: 21px; left: 135px; transform: rotate(45deg);"></div>
                             </div>
                         </div>
                         <div id="ns-drawer-1-front" class="absolute inset-0 bg-amber-800 border-t border-amber-700 flex items-center justify-center cursor-pointer transition-transform duration-500 ease-in-out z-20" onclick="toggleNSDrawer(1)">
@@ -1010,16 +1166,22 @@
                     <!-- Drawer 2 (Unkempt Underwear) -->
                     <div class="relative flex-1 bg-amber-950 border-4 border-amber-950/50 overflow-hidden rounded shadow-inner">
                         <div class="absolute inset-0 bg-slate-950 p-2 overflow-hidden flex flex-col items-center justify-center">
-                            <!-- Overlapping, unkempt underwear drawers clutter (8 pairs) -->
-                            <div id="underwear-drawer-container" class="absolute inset-0">
-                                <div class="pile-item-undies bg-teal-700 border-2 border-teal-950" style="top: 4px; left: 15px; transform: rotate(12deg);" onclick="moveUnderwear(event)"></div>
-                                <div class="pile-item-undies bg-rose-600 border-2 border-rose-900" style="top: 8px; left: 55px; transform: rotate(-18deg);" onclick="moveUnderwear(event)"></div>
-                                <div class="pile-item-undies bg-gray-600 border-2 border-gray-800" style="top: 6px; left: 95px; transform: rotate(5deg);" onclick="moveUnderwear(event)"></div>
-                                <div class="pile-item-undies bg-sky-800 border-2 border-sky-950" style="top: 10px; left: 135px; transform: rotate(30deg);" onclick="moveUnderwear(event)"></div>
-                                <div class="pile-item-undies bg-violet-800 border-2 border-violet-950" style="top: 12px; left: 175px; transform: rotate(-15deg);" onclick="moveUnderwear(event)"></div>
-                                <div class="pile-item-undies bg-emerald-600 border-2 border-emerald-950" style="top: 15px; left: 35px; transform: rotate(-35deg);" onclick="moveUnderwear(event)"></div>
-                                <div class="pile-item-undies bg-orange-700 border-2 border-orange-950" style="top: 14px; left: 110px; transform: rotate(40deg);" onclick="moveUnderwear(event)"></div>
-                                <div class="pile-item-undies bg-neutral-700 border-2 border-neutral-900" style="top: 18px; left: 75px; transform: rotate(-5deg);" onclick="moveUnderwear(event)"></div>
+                            <!-- Overlapping, unkempt underwear drawers clutter (14 pairs) -->
+                            <div id="underwear-drawer-container" class="drawer-clothes-pile" onclick="moveUnderwear(event)">
+                                <div class="pile-item-undies bg-teal-700 border-2 border-teal-950" style="top: 4px; left: 15px; transform: rotate(12deg);"></div>
+                                <div class="pile-item-undies bg-rose-600 border-2 border-rose-900" style="top: 8px; left: 55px; transform: rotate(-18deg);"></div>
+                                <div class="pile-item-undies bg-gray-600 border-2 border-gray-800" style="top: 6px; left: 95px; transform: rotate(5deg);"></div>
+                                <div class="pile-item-undies bg-sky-800 border-2 border-sky-950" style="top: 10px; left: 135px; transform: rotate(30deg);"></div>
+                                <div class="pile-item-undies bg-violet-800 border-2 border-violet-950" style="top: 12px; left: 175px; transform: rotate(-15deg);"></div>
+                                <div class="pile-item-undies bg-emerald-600 border-2 border-emerald-950" style="top: 15px; left: 35px; transform: rotate(-35deg);"></div>
+                                <div class="pile-item-undies bg-orange-700 border-2 border-orange-950" style="top: 14px; left: 110px; transform: rotate(40deg);"></div>
+                                <div class="pile-item-undies bg-neutral-700 border-2 border-neutral-900" style="top: 18px; left: 75px; transform: rotate(-5deg);"></div>
+                                <div class="pile-item-undies undies-pink" style="top: 2px; left: 40px; transform: rotate(-25deg);"></div>
+                                <div class="pile-item-undies undies-green" style="top: 3px; left: 80px; transform: rotate(15deg);"></div>
+                                <div class="pile-item-undies undies-dark" style="top: 1px; left: 120px; transform: rotate(-5deg);"></div>
+                                <div class="pile-item-undies undies-striped" style="top: 16px; left: 20px; transform: rotate(-45deg);"></div>
+                                <div class="pile-item-undies undies-pink" style="top: 18px; left: 100px; transform: rotate(20deg);"></div>
+                                <div class="pile-item-undies undies-striped" style="top: 20px; left: 150px; transform: rotate(-10deg);"></div>
                             </div>
                         </div>
                         <div id="ns-drawer-2-front" class="absolute inset-0 bg-amber-800 border-t border-amber-700 flex items-center justify-center cursor-pointer transition-transform duration-500 ease-in-out z-20" onclick="toggleNSDrawer(2)">
@@ -1032,13 +1194,13 @@
                 <div id="ns-back-side" class="hidden flex flex-col justify-between h-full text-center relative">
                     <div class="flex-1 bg-amber-950 border-4 border-amber-950/50 rounded shadow-inner p-4 relative flex flex-col items-center justify-center overflow-hidden">
                         <div id="ns-secret-door" class="absolute inset-0 bg-amber-800 border-2 border-amber-950 flex items-center justify-center cursor-pointer transition-all duration-500 hover:brightness-110 shadow-lg z-10" onclick="openSecretCompartment(event)">
-                            <!-- Pure wood handle notch, no text -->
+                            <!-- Pure wood handle notch -->
                             <div class="w-8 h-2.5 bg-amber-950 rounded shadow-inner border border-amber-900"></div>
                         </div>
                         <!-- Inside Compartment Item (Battery 🔋) -->
                         <div id="ns-secret-item" class="text-4xl cursor-pointer hover:scale-110 transition select-none" onclick="takeSecretItem(event)">🔋</div>
                     </div>
-                    <!-- Minimalist back-flipper icon, no words -->
+                    <!-- Minimalist back-flipper icon -->
                     <div class="text-2xl text-amber-400 mt-2 hover:text-amber-200 cursor-pointer transition-colors" onclick="flipNightstand(event)" title="Return to Front">
                         ↩
                     </div>
@@ -1091,6 +1253,26 @@
             </div>
         </div>
 
+        <!-- Skewed Occult Handwritten Note Modal -->
+        <div id="note-modal" class="modal-overlay" onclick="closeModals()">
+            <div id="note-paper" class="w-[85vw] max-w-sm p-8 rounded shadow-2xl relative border-amber-900 text-center flex flex-col items-center justify-center" onclick="event.stopPropagation()">
+                <div class="close-btn" onclick="closeModals()">X</div>
+                <div class="parchment-border"></div>
+                <!-- Obscure Occult Diagrams (Stars, Moon, Eye) -->
+                <svg class="w-16 h-16 stroke-amber-800/45 fill-none opacity-60 mb-2" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="30" stroke-dasharray="2,2" />
+                    <polygon points="50,15 20,75 80,75" stroke-width="0.75" />
+                    <circle cx="50" cy="53" r="5" fill="#78350f" opacity="0.6" />
+                </svg>
+                <!-- Clue Handwriting Body -->
+                <p id="note-text" class="text-xl leading-relaxed text-amber-950 font-semibold tracking-wide italic whitespace-pre-line select-none"></p>
+                <!-- Obscure footnotes -->
+                <div class="text-[9px] uppercase tracking-widest text-amber-900/40 font-serif mt-6 select-none">
+                    AL-KHEM // CH. II
+                </div>
+            </div>
+        </div>
+
         <!-- General Message Modal -->
         <div id="msg-modal" class="modal-overlay" onclick="closeModals()">
             <div class="modal-content" onclick="event.stopPropagation()">
@@ -1128,61 +1310,62 @@
                     </div>
                     
                     <!-- Right: Interactive Patch Bay -->
-                    <div class="flex-1 flex flex-col justify-between">
+                    <div class="flex-1 flex flex-col justify-between font-sans">
+                        <!-- Use pointer-events-auto and separate handlers to protect wire drawing -->
                         <div id="wire-container" class="relative w-full h-72 bg-slate-950 border-2 border-slate-700 rounded flex justify-between px-4 py-4">
                             <svg id="wire-svg" class="absolute inset-0 w-full h-full pointer-events-none z-10"></svg>
                             
                             <!-- Left Nodes (Inputs 1-5) -->
                             <div class="flex flex-col justify-between h-full z-20">
                                 <div class="flex items-center gap-2">
-                                    <div class="wire-node left-node bg-white" id="node-L1" onclick="selectWire('L1')"></div>
-                                    <span class="text-[10px] font-mono text-slate-400">1</span>
+                                    <div class="wire-node left-node bg-white" id="node-L1" onclick="selectWire('L1', event)"></div>
+                                    <span class="text-[10px] font-mono text-slate-400 select-none">1</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <div class="wire-node left-node bg-yellow-400" id="node-L2" onclick="selectWire('L2')"></div>
-                                    <span class="text-[10px] font-mono text-slate-400">2</span>
+                                    <div class="wire-node left-node bg-yellow-400" id="node-L2" onclick="selectWire('L2', event)"></div>
+                                    <span class="text-[10px] font-mono text-slate-400 select-none">2</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <div class="wire-node left-node bg-blue-500" id="node-L3" onclick="selectWire('L3')"></div>
-                                    <span class="text-[10px] font-mono text-slate-400">3</span>
+                                    <div class="wire-node left-node bg-blue-500" id="node-L3" onclick="selectWire('L3', event)"></div>
+                                    <span class="text-[10px] font-mono text-slate-400 select-none">3</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <div class="wire-node left-node bg-green-500" id="node-L4" onclick="selectWire('L4')"></div>
-                                    <span class="text-[10px] font-mono text-slate-400">4</span>
+                                    <div class="wire-node left-node bg-green-500" id="node-L4" onclick="selectWire('L4', event)"></div>
+                                    <span class="text-[10px] font-mono text-slate-400 select-none">4</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <div class="wire-node left-node bg-red-500" id="node-L5" onclick="selectWire('L5')"></div>
-                                    <span class="text-[10px] font-mono text-slate-400">5</span>
+                                    <div class="wire-node left-node bg-red-500" id="node-L5" onclick="selectWire('L5', event)"></div>
+                                    <span class="text-[10px] font-mono text-slate-400 select-none">5</span>
                                 </div>
                             </div>
 
                             <!-- Right Nodes (Outputs A-E) -->
                             <div class="flex flex-col justify-between h-full z-20 items-end">
                                 <div class="flex items-center gap-2">
-                                    <span class="text-[10px] font-mono text-slate-400">A</span>
-                                    <div class="wire-node right-node bg-slate-600" id="node-RA" onclick="connectWire('RA')"></div>
+                                    <span class="text-[10px] font-mono text-slate-400 select-none">A</span>
+                                    <div class="wire-node right-node bg-slate-600" id="node-RA" onclick="connectWire('RA', event)"></div>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <span class="text-[10px] font-mono text-slate-400">B</span>
-                                    <div class="wire-node right-node bg-slate-600" id="node-RB" onclick="connectWire('RB')"></div>
+                                    <span class="text-[10px] font-mono text-slate-400 select-none">B</span>
+                                    <div class="wire-node right-node bg-slate-600" id="node-RB" onclick="connectWire('RB', event)"></div>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <span class="text-[10px] font-mono text-slate-400">C</span>
-                                    <div class="wire-node right-node bg-slate-600" id="node-RC" onclick="connectWire('RC')"></div>
+                                    <span class="text-[10px] font-mono text-slate-400 select-none">C</span>
+                                    <div class="wire-node right-node bg-slate-600" id="node-RC" onclick="connectWire('RC', event)"></div>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <span class="text-[10px] font-mono text-slate-400">D</span>
-                                    <div class="wire-node right-node bg-slate-600" id="node-RD" onclick="connectWire('RD')"></div>
+                                    <span class="text-[10px] font-mono text-slate-400 select-none">D</span>
+                                    <div class="wire-node right-node bg-slate-600" id="node-RD" onclick="connectWire('RD', event)"></div>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <span class="text-[10px] font-mono text-slate-400">E</span>
-                                    <div class="wire-node right-node bg-slate-600" id="node-RE" onclick="connectWire('RE')"></div>
+                                    <span class="text-[10px] font-mono text-slate-400 select-none">E</span>
+                                    <div class="wire-node right-node bg-slate-600" id="node-RE" onclick="connectWire('RE', event)"></div>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="flex justify-between items-center mt-4">
-                            <span class="text-xs text-slate-400">Click a colored node, then click a target node.</span>
+                            <span class="text-xs text-slate-400 select-none">Click a left terminal, then click a target letter.</span>
                             <button class="px-4 py-1.5 bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold rounded transition" onclick="resetWires()">Reset</button>
                         </div>
                     </div>
@@ -1192,7 +1375,7 @@
 
         <!-- Vent Close-up Modal (Completely Wordless) -->
         <div id="vent-modal" class="modal-overlay" onclick="closeModals()">
-            <div class="bg-slate-800 p-6 rounded-xl border-4 border-slate-600 w-[90vw] max-w-md relative" onclick="event.stopPropagation()">
+            <div class="bg-slate-800 p-6 rounded-xl border-4 border-slate-600 w-[90vw] max-w-md relative animate-fade-in" onclick="event.stopPropagation()">
                 <div class="close-btn" onclick="closeModals()">X</div>
                 
                 <div id="vent-close-up-box" class="relative w-64 h-64 bg-slate-900 border-4 border-slate-700 rounded mx-auto overflow-hidden mt-6">
@@ -1216,6 +1399,9 @@
                         <!-- Dusty background texture -->
                         <div class="absolute inset-0" style="background: radial-gradient(circle at 50% 50%, rgba(148, 163, 184, 0.15) 0%, rgba(15, 23, 42, 0.95) 85%);"></div>
                         
+                        <!-- Magical Piece of Chalk hiding in clean/lit vent shaft -->
+                        <div id="chalk-item" class="absolute text-3xl cursor-pointer select-none transition-all duration-500 opacity-0 scale-0 z-10 p-2 rounded-full" style="top: 40%; left: calc(50% - 20px); filter: drop-shadow(0 0 10px #38bdf8);" onclick="interact('take-chalk', event)">🖍️</div>
+
                         <!-- High-fidelity custom SVG Cobwebs -->
                         <svg id="procedural-cobwebs" class="absolute inset-0 w-full h-full opacity-40 pointer-events-none transition-opacity duration-700" viewBox="0 0 100 100">
                             <!-- Radiating Structural Lines -->
@@ -1283,24 +1469,36 @@
             socksMoved: false,
             underwearMoved: false,
             tapestryMoved: false,
-            selectedItemIndex: -1 // Current active inventory slot selected
+            selectedItemIndex: -1, // Current active inventory slot selected
+            clueTaken: false, // Track whether the single note clue has been taken
+            chalkFound: false,
+            doorDrawn: false
         };
 
         const compassLabels = ["NORTH", "EAST", "SOUTH", "WEST"];
-        let statusTimeout;
 
-        // UI Helpers
+        // UI Helpers - Persistent Narration Engine
         function showStatus(msg) {
             const statusEl = document.getElementById('status-bar');
             statusEl.innerText = msg;
             statusEl.style.opacity = 1;
-            clearTimeout(statusTimeout);
-            statusTimeout = setTimeout(() => statusEl.style.opacity = 0, 3000);
+        }
+
+        function clearStatus() {
+            const statusEl = document.getElementById('status-bar');
+            statusEl.style.opacity = 0;
+            statusEl.innerText = "";
         }
 
         function showMessage(htmlContent) {
             document.getElementById('msg-text').innerHTML = htmlContent;
             document.getElementById('msg-modal').style.display = 'flex';
+        }
+
+        // Open the Handwritten Note Modal
+        function showHandwrittenNote(text) {
+            document.getElementById('note-text').innerText = text;
+            document.getElementById('note-modal').style.display = 'flex';
         }
 
         function closeModals() {
@@ -1312,6 +1510,7 @@
             if (crack) crack.style.display = 'block';
             state.currentPadInput = "";
             state.currentSafeInput = "";
+            clearStatus();
         }
 
         // Navigation
@@ -1333,6 +1532,7 @@
         function rotateRoom(dir) {
             state.view = (state.view + dir + 4) % 4;
             updateView();
+            clearStatus();
         }
 
         let previousView = 0;
@@ -1340,11 +1540,14 @@
             previousView = state.view;
             state.view = 4;
             updateView();
+            clearStatus();
         }
 
+        // Return to floor view
         function lookDown() {
             state.view = previousView;
             updateView();
+            clearStatus();
         }
 
         // Toggle Room Ceiling Light and Sync switch states
@@ -1470,7 +1673,7 @@
             socks.forEach((sock, i) => {
                 if (state.socksMoved) {
                     // Spread outward radically to reveal the duster
-                    const angle = (i * 30) * Math.PI / 180;
+                    const angle = (i * 18) * Math.PI / 180;
                     const dist = 75;
                     const x = Math.cos(angle) * dist;
                     const y = Math.sin(angle) * dist - 15;
@@ -1503,7 +1706,7 @@
             
             undies.forEach((undie, i) => {
                 if (state.underwearMoved) {
-                    const angle = (i * 45) * Math.PI / 180;
+                    const angle = (i * 25) * Math.PI / 180;
                     const dist = 60;
                     const x = Math.cos(angle) * dist;
                     const y = Math.sin(angle) * dist + 10;
@@ -1518,7 +1721,7 @@
             }
         }
 
-        // General nightstand modal drawer slide toggles
+        // General nightstand drawer slide toggles
         function toggleNSDrawer(drawerNum) {
             const front = document.getElementById(`ns-drawer-${drawerNum}-front`);
             if (front) {
@@ -1529,6 +1732,17 @@
         // Active selection system slots
         function selectSlot(index) {
             if (index < 0 || index >= state.inventory.length) return;
+            const activeTool = getSelectedItem();
+            const clickedItem = state.inventory[index];
+
+            // If we have a battery selected and click on the flashlight (or vice versa), combine them
+            if (activeTool && (
+                (activeTool.id === 'battery' && clickedItem.id === 'flashlight') ||
+                (activeTool.id === 'flashlight' && clickedItem.id === 'battery')
+            )) {
+                checkCombine();
+                return;
+            }
             
             // If already selected, deselect it
             if (state.selectedItemIndex === index) {
@@ -1537,8 +1751,25 @@
             } else {
                 state.selectedItemIndex = index;
                 showStatus(`Selected: ${state.inventory[index].name}`);
+                
+                // Immediately check if the item is inspectable and show the written page modal
+                inspectItem(index + 1);
             }
             updateInventoryUI();
+        }
+
+        // Escape Final Game Sequence
+        function escapeDungeon(event) {
+            if (event) event.stopPropagation();
+            showMessage(`
+                <span class='text-emerald-400 font-bold text-4xl block mb-4 tracking-wider animate-bounce'>VICTORY!</span>
+                <p class='text-lg text-slate-200 mb-6 leading-relaxed max-w-md mx-auto'>
+                    Step forward out into the brilliant, fresh mountain air! You sketched a magical doorway in the chalk of legend, dissolved the ancient stone vault, and escaped the room forever.
+                </p>
+                <div class='mt-6 text-yellow-500 font-mono text-sm tracking-widest uppercase animate-pulse'>
+                    - Game Over -
+                </div>
+            `);
         }
 
         // Interactions
@@ -1606,7 +1837,13 @@
 
                 case 'green-key':
                     document.getElementById('green-key').style.display = 'none';
-                    addToInventory({ id: 'green_key', name: 'Green Key', icon: '🗝️', desc: 'A strange key with a greenish tint.' });
+                    // Apply visual filtering so the green key actually renders green
+                    addToInventory({ 
+                        id: 'green_key', 
+                        name: 'Green Key', 
+                        icon: '<div style="filter: hue-rotate(90deg) brightness(1.2) drop-shadow(0 0 4px #10b981);">🗝️</div>', 
+                        desc: 'A strange key with a greenish tint.' 
+                    });
                     showStatus("Picked up the Green Key.");
                     break;
                     
@@ -1617,7 +1854,9 @@
                 // Ugly Rug Corners
                 case 'ur-tl':
                     document.getElementById('ur-tl').classList.add('ur-folded-tl');
-                    document.getElementById('hidden-clue').style.display = 'flex';
+                    if (!state.clueTaken) {
+                        document.getElementById('hidden-clue').style.display = 'flex';
+                    }
                     showStatus("You folded up the corner.");
                     break;
                 case 'ur-tr':
@@ -1639,7 +1878,7 @@
 
                 case 'screwdriver':
                     document.getElementById('screwdriver-item').style.display = 'none';
-                    addToInventory({ id: 'screwdriver', name: 'Screwdriver', icon: '🪛', desc: 'A flathead screwdriver with a worn rubber grip. Must be selected to use on tight screws.' });
+                    addToInventory({ id: 'screwdriver', name: 'Screwdriver', icon: '🪛', desc: 'A flathead screwdriver with a worn rubber grip.' });
                     showStatus("Picked up the Screwdriver.");
                     break;
 
@@ -1647,6 +1886,13 @@
                     document.getElementById('duster-item').style.display = 'none';
                     addToInventory({ id: 'duster', name: 'Duster', icon: '🧹', desc: 'An old feather duster. Looks handy for sweeping away cobwebs.' });
                     showStatus("Picked up the Spiderweb Duster.");
+                    break;
+
+                case 'take-chalk':
+                    document.getElementById('chalk-item').style.display = 'none';
+                    addToInventory({ id: 'chalk', name: 'Magical Chalk', icon: '🖍️', desc: 'A soft piece of chalk glowing with magical energy.' });
+                    state.chalkFound = true;
+                    showStatus("Picked up the Magical Chalk.");
                     break;
 
                 case 'desk-drawer-2':
@@ -1662,7 +1908,7 @@
                             document.getElementById('drawer-2-lock-indicator').style.backgroundColor = '#10b981';
                             showStatus("Unlocked the middle drawer with the Green Key.");
                         } else {
-                            showStatus("This drawer is locked tight. The keyhole has a greenish glow. I need to select the correct key first.");
+                            showStatus("This drawer is locked tight.");
                         }
                     }
                     break;
@@ -1684,7 +1930,7 @@
                         document.getElementById('rug').classList.add('rug-folded');
                         document.getElementById('hidden-key').style.display = 'flex';
                         state.redRugStage = 2;
-                        showStatus("Folded back the corner. Found a key!");
+                        showStatus("Folded back the corner. There is a small key lying on the dusty floorboards.");
                     }
                     break;
 
@@ -1696,7 +1942,8 @@
 
                 case 'clue':
                     document.getElementById('hidden-clue').style.display = 'none';
-                    addToInventory({ id: 'clue', name: 'Note', icon: '📝', desc: '"Primary colors in order: Red, Green, Blue."' });
+                    addToInventory({ id: 'clue', name: 'Note', icon: '📝', desc: '"Primary colors in order: Red, Green, Blue"' });
+                    state.clueTaken = true; // Ensure they can never grab another copy
                     showStatus("Picked up a note.");
                     break;
 
@@ -1721,7 +1968,7 @@
                         updateSafePadDisplay();
                         document.getElementById('safe-modal').style.display = 'flex';
                     } else {
-                        showStatus("Locked with a solid dual lock mechanism. Needs to have its key selected from your inventory and used here.");
+                        showStatus("A heavy iron safe with a digital dial and keyhole. It is locked tight.");
                     }
                     break;
 
@@ -1743,40 +1990,61 @@
                     break;
 
                 case 'vent':
-                    if (!state.wiresFixed || !state.ceilingLightOn) {
-                        showStatus("The ceiling is completely dark. I can't interact with the vent in this pitch black.");
-                    } else if (state.ventOpen) {
+                    // Always open closeup modal, letting other state checks happen inside the closeup
+                    document.getElementById('vent-modal').style.display = 'flex';
+                    
+                    // Show current status of the vent
+                    if (state.ventOpen) {
                         if (state.ventCleaned) {
-                            showStatus("The metal cover is gone, revealing a clean but completely empty ventilation shaft.");
-                        } else {
-                            if (activeTool && activeTool.id === 'duster') {
-                                state.ventCleaned = true;
-                                removeFromInventory('duster');
-                                const webs = document.getElementById('procedural-cobwebs');
-                                if (webs) webs.style.opacity = '0';
-                                showStatus("You thoroughly clean out the vent, sweeping away all the sticky dust and cobwebs! It is now clean, but empty.");
+                            // If light is on or UV flashlight is held, show the chalk piece inside
+                            if (activeTool && activeTool.id === 'uv_flashlight' && !state.chalkFound) {
+                                document.getElementById('chalk-item').style.opacity = '1';
+                                document.getElementById('chalk-item').style.transform = 'scale(1)';
+                                showStatus("Shining the UV flashlight inside... I can see a piece of glowing chalk sitting inside the empty vent!");
+                            } else if (state.ceilingLightOn && !state.chalkFound) {
+                                document.getElementById('chalk-item').style.opacity = '1';
+                                document.getElementById('chalk-item').style.transform = 'scale(1)';
+                                showStatus("Revealed something lying inside the clean metal ventilation shaft.");
+                            } else if (!state.ceilingLightOn && !state.chalkFound) {
+                                showStatus("The vent cover is gone, but it is too dark to look inside.");
                             } else {
-                                showStatus("The metal cover is gone, revealing a dusty ventilation shaft filled with old sticky cobwebs. I need to select a cleaning tool.");
+                                showStatus("The metal cover is gone, revealing a clean but completely empty ventilation shaft.");
                             }
+                        } else {
+                            showStatus("The metal cover is gone, revealing a dusty ventilation shaft filled with old sticky cobwebs.");
                         }
-                    } else {
-                        document.getElementById('vent-modal').style.display = 'flex';
                     }
                     break;
 
                 case 'vent-contents':
                     if (state.ventOpen) {
                         if (state.ventCleaned) {
-                            showStatus("The vent is now cleaned out, but there is nothing but an empty metal void inside.");
+                            if (activeTool && activeTool.id === 'uv_flashlight' && !state.chalkFound) {
+                                document.getElementById('chalk-item').style.opacity = '1';
+                                document.getElementById('chalk-item').style.transform = 'scale(1)';
+                                showStatus("Shining the UV flashlight inside... I can see a piece of glowing chalk sitting inside the empty vent!");
+                            } else if (state.ceilingLightOn && !state.chalkFound) {
+                                document.getElementById('chalk-item').style.opacity = '1';
+                                document.getElementById('chalk-item').style.transform = 'scale(1)';
+                                showStatus("Revealed something lying inside the clean metal ventilation shaft.");
+                            } else if (!state.ceilingLightOn) {
+                                showStatus("The vent is now cleaned out, but it is too dark to look inside.");
+                            } else {
+                                showStatus("The vent is now cleaned out, but there is nothing but an empty metal void inside.");
+                            }
                         } else {
                             if (activeTool && activeTool.id === 'duster') {
                                 state.ventCleaned = true;
                                 removeFromInventory('duster');
                                 const webs = document.getElementById('procedural-cobwebs');
                                 if (webs) webs.style.opacity = '0';
-                                showStatus("You thoroughly clean out the vent, sweeping away all the sticky dust and cobwebs! It is now clean, but empty.");
+                                if (!state.ceilingLightOn) {
+                                    showStatus("You thoroughly clean out the vent, sweeping away all the sticky dust and cobwebs! However, it is too dark to look inside.");
+                                } else {
+                                    showStatus("You thoroughly clean out the vent, sweeping away all the sticky dust and cobwebs! It is now clean, but empty.");
+                                }
                             } else {
-                                showStatus("The metal cover is gone, revealing a dusty ventilation shaft filled with old sticky cobwebs. I need to select a cleaning tool.");
+                                showStatus("The metal cover is gone, revealing a dusty ventilation shaft filled with old sticky cobwebs.");
                             }
                         }
                     }
@@ -1787,13 +2055,38 @@
                     const tapestryEl = document.getElementById('tapestry');
                     const engraving = document.getElementById('tapestry-engraving');
                     if (state.tapestryMoved) {
-                        tapestryEl.style.transform = 'translateX(-125px) rotate(-8deg)';
+                        tapestryEl.style.transform = 'translateX(-140%) rotate(-15deg) skewY(-5deg)';
                         if (engraving) engraving.style.opacity = '1';
-                        showStatus("You pull the heavy tapestry aside, revealing some writing scratched on the wall.");
+                        showStatus("You pull the heavy tapestry aside, revealing a faint, scratched outline of a hidden door in the stone wall.");
                     } else {
                         tapestryEl.style.transform = 'none';
                         if (engraving) engraving.style.opacity = '0';
                         showStatus("You place the tapestry back.");
+                    }
+                    break;
+
+                case 'tapestry-door':
+                    if (activeTool && activeTool.id === 'chalk') {
+                        state.doorDrawn = true;
+                        removeFromInventory('chalk');
+                        
+                        // Sketching line drawing animation
+                        const sketchSvg = document.getElementById('chalk-draw-svg');
+                        sketchSvg.classList.remove('hidden');
+                        showStatus("Drawing over the stone lines with the Magical Chalk...");
+                        
+                        // Dissolve stone wall to reveal landscape window
+                        setTimeout(() => {
+                            const portal = document.getElementById('outdoor-reveal');
+                            portal.classList.remove('hidden');
+                            setTimeout(() => {
+                                portal.classList.remove('opacity-0');
+                                portal.classList.add('opacity-100');
+                                showStatus("The stone crumbles away into beautiful swirling runes, revealing a portal leading to freedom!");
+                            }, 50);
+                        }, 3600);
+                    } else {
+                        showStatus("There is a faint outline of a door drawn into the stone behind the hanging tapestry.");
                     }
                     break;
 
@@ -1811,13 +2104,7 @@
                     break;
 
                 case 'door':
-                    if (state.doorUnlocked) {
-                        showMessage("<span class='text-emerald-400 font-bold text-3xl'>YOU ESCAPED!</span><br><br>You successfully solved the room.");
-                    } else {
-                        state.currentPadInput = "";
-                        updatePadDisplay();
-                        document.getElementById('keypad-modal').style.display = 'flex';
-                    }
+                    showStatus("A heavy, iron-reinforced oak door. It is locked tight.");
                     break;
             }
         }
@@ -1841,6 +2128,7 @@
             }
         }
 
+        // Open Secret Drawer compartment
         function openSecretCompartment(event) {
             if (event) event.stopPropagation();
             if (state.nsBackSecretOpen) return;
@@ -1854,15 +2142,14 @@
             showStatus("Opened secret panel! Something is tucked inside.");
         }
 
-        // Take secret item (relocated to Battery)
+        // Take secret battery item
         function takeSecretItem(event) {
             if (event) event.stopPropagation();
             if (!state.nsBackSecretOpen || state.nsBackSecretTaken) return;
             state.nsBackSecretTaken = true;
             document.getElementById('ns-secret-item').style.display = 'none';
-            addToInventory({ id: 'battery', name: 'Battery', icon: '🔋', desc: 'A heavy-duty 9-volt battery.' });
+            addToInventory({ id: 'battery', name: 'Battery', icon: '🔋', desc: 'A heavy-duty 9-volt battery. Try selecting it and combining it with another unpowered tool.' });
             showStatus("Picked up the Battery.");
-            checkCombine();
         }
 
         // Lockbox Puzzle
@@ -1879,7 +2166,7 @@
                 state.boxOpen = true;
                 document.getElementById('lockbox').innerText = "[ OPEN ]";
                 document.getElementById('lockbox').style.borderColor = "#10b981"; // green
-                addToInventory({ id: 'scroll', name: 'Mysterious Scroll', icon: '📜', desc: 'An old dust-covered scroll. It reads: "To escape, look where others refuse to go. Shadows reveal the light."' });
+                addToInventory({ id: 'scroll', name: 'Mysterious Scroll', icon: '📜', desc: 'An old dust-covered scroll.' });
                 showStatus("Lockbox opened! Found a Mysterious Scroll.");
             } else {
                 showStatus("Incorrect combination.");
@@ -1906,21 +2193,16 @@
 
         // Combine logic (Flashlight + Battery -> Working UV Flashlight with shiny pulsed icon)
         function checkCombine() {
-            const hasFlashlight = state.inventory.find(i => i.id === 'flashlight');
-            const hasBattery = state.inventory.find(i => i.id === 'battery');
-            
-            if (hasFlashlight && hasBattery) {
-                removeFromInventory('flashlight');
-                removeFromInventory('battery');
-                addToInventory({ 
-                    id: 'uv_flashlight', 
-                    name: 'Working UV Flashlight', 
-                    icon: '<div class="glowing-flash">🔦✨</div>', 
-                    desc: 'A working UV flashlight. Emits a purple glow. Select it and click the ceiling in the dark!' 
-                });
-                state.flashlightCombined = true;
-                setTimeout(() => showMessage("You inserted the Battery into the Flashlight. It works!"), 500);
-            }
+            removeFromInventory('flashlight');
+            removeFromInventory('battery');
+            addToInventory({ 
+                id: 'uv_flashlight', 
+                name: 'Working UV Flashlight', 
+                icon: '<div class="glowing-flash">🔦</div>', // custom glowing yellow flashlight icon
+                desc: 'A working UV flashlight. Emits a purple glow. Select it and click the ceiling in the dark!' 
+            });
+            state.flashlightCombined = true;
+            showStatus("You inserted the Battery into the Flashlight. It works!");
         }
 
         function updateInventoryUI() {
@@ -1941,6 +2223,207 @@
                     }
                 }
             });
+        }
+
+        // Inspect Inventory Items (Uses beautifully styled handwritten journal notes modal)
+        function inspectItem(slotIndex) {
+            const item = state.inventory[slotIndex - 1];
+            if (!item) return;
+
+            if (item.id === 'clue') {
+                showHandwrittenNote("A scrap of torn paper. Written in uneven charcoal script:\n\n\"Primary colors in order:\n\nRed, Green, Blue.\"");
+            } else if (item.id === 'scroll') {
+                showHandwrittenNote("A dusty roll of thick parchment. Unraveling it reveals an obscure inscription:\n\n\"To escape, look where others refuse to go.\n\nShadows reveal the light.\"");
+            } else {
+                showStatus(`${item.name}: ${item.desc}`);
+            }
+        }
+
+        // Main Door Keypad
+        function typePad(num) {
+            if (state.currentPadInput.length < 4) {
+                state.currentPadInput += num.toString();
+                updatePadDisplay();
+                if (state.currentPadInput.length === 4) setTimeout(checkCode, 300);
+            }
+        }
+
+        // Clear Keypad input
+        function clearPad() {
+            state.currentPadInput = "";
+            updatePadDisplay();
+            document.getElementById('keypad-display').style.color = "#34d399";
+        }
+
+        function updatePadDisplay() {
+            document.getElementById('keypad-display').innerText = state.currentPadInput.padEnd(4, '-');
+        }
+
+        function checkCode() {
+            if (state.currentPadInput === "7492") {
+                document.getElementById('keypad-display').style.color = "#34d399";
+                document.getElementById('keypad-display').innerText = "OPEN";
+                setTimeout(() => {
+                    closeModals();
+                    state.doorUnlocked = true;
+                    document.getElementById('door').style.boxShadow = "inset 0 0 50px rgba(52, 211, 153, 0.5)";
+                    document.getElementById('door').style.border = "8px solid #064e3b";
+                    showStatus("Main door unlocked.");
+                }, 800);
+            } else {
+                document.getElementById('keypad-display').style.color = "#ef4444";
+                document.getElementById('keypad-display').innerText = "ERR ";
+                setTimeout(clearPad, 1000);
+            }
+        }
+
+        // --- Safe Combination Pad Logic ---
+        function typeSafePad(num) {
+            if (state.currentSafeInput.length < 4) {
+                state.currentSafeInput += num.toString();
+                updateSafePadDisplay();
+                if (state.currentSafeInput.length === 4) setTimeout(checkSafeCode, 300);
+            }
+        }
+
+        // Reset Safe Pad Combination state
+        function clearSafePad() {
+            state.currentSafeInput = "";
+            updateSafePadDisplay();
+            document.getElementById('safe-display').style.color = "#f59e0b"; // amber-500
+        }
+
+        function updateSafePadDisplay() {
+            document.getElementById('safe-display').innerText = state.currentSafeInput.padEnd(4, '-');
+        }
+
+        function checkSafeCode() {
+            if (state.currentSafeInput === "3820") {
+                document.getElementById('safe-display').style.color = "#10b981"; // emerald-500
+                document.getElementById('safe-display').innerText = "OPEN";
+                setTimeout(() => {
+                    closeModals();
+                    state.safeOpen = true;
+                    removeFromInventory('small_key');
+                    addToInventory({ id: 'flashlight', name: 'UV Flashlight', icon: '🔦', desc: 'A heavy metal flashlight. It has no batteries. Combine with a Battery inside your inventory to light it!' });
+                    showStatus("Unlocked safe! Found a Flashlight.");
+                }, 800);
+            } else {
+                document.getElementById('safe-display').style.color = "#ef4444";
+                document.getElementById('safe-display').innerText = "ERR ";
+                setTimeout(clearSafePad, 1000);
+            }
+        }
+
+        // --- Wire Puzzle Logic ---
+        let activeWire = null;
+        // Connections represent Left port (L1-L5) connected to Right port (RA-RE)
+        const wireConnections = { 'L1': null, 'L2': null, 'L3': null, 'L4': null, 'L5': null };
+        const wireColors = { 'L1': '#f8fafc', 'L2': '#eab308', 'L3': '#3b82f6', 'L4': '#22c55e', 'L5': '#ef4444' };
+
+        // Wire selection - isolated from inventory tools
+        function selectWire(leftId, event) {
+            if (event) event.stopPropagation();
+            if (state.wiresFixed) return;
+            document.querySelectorAll('.left-node').forEach(n => n.classList.remove('node-selected'));
+            activeWire = leftId;
+            document.getElementById(`node-${leftId}`).classList.add('node-selected');
+        }
+
+        // Wire connection handler - isolated from inventory tools
+        function connectWire(rightId, event) {
+            if (event) event.stopPropagation();
+            if (state.wiresFixed || !activeWire) return;
+            
+            // Remove connection if terminal is already in use
+            for (let l in wireConnections) {
+                if (wireConnections[l] === rightId) wireConnections[l] = null;
+            }
+            
+            wireConnections[activeWire] = rightId;
+            activeWire = null;
+            document.querySelectorAll('.left-node').forEach(n => n.classList.remove('node-selected'));
+            drawWires();
+            checkWires();
+        }
+
+        function drawWires() {
+            const svg = document.getElementById('wire-svg');
+            svg.innerHTML = '';
+            const container = document.getElementById('wire-container');
+            if (!container) return;
+            const cRect = container.getBoundingClientRect();
+            
+            for (let leftId in wireConnections) {
+                const rightId = wireConnections[leftId];
+                if (rightId) {
+                    const lNode = document.getElementById(`node-${leftId}`);
+                    const rNode = document.getElementById(`node-${rightId}`);
+                    if (!lNode || !rNode) continue;
+                    const lRect = lNode.getBoundingClientRect();
+                    const rRect = rNode.getBoundingClientRect();
+                    
+                    // Calculate center points of the nodes relative to the SVG canvas
+                    const x1 = lRect.left - cRect.left + lRect.width/2;
+                    const y1 = lRect.top - cRect.top + lRect.height/2;
+                    const x2 = rRect.left - cRect.left + rRect.width/2;
+                    const y2 = rRect.top - cRect.top + rRect.height/2;
+                    
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line.setAttribute('x1', x1);
+                    line.setAttribute('y1', y1);
+                    line.setAttribute('x2', x2);
+                    line.setAttribute('y2', y2);
+                    line.setAttribute('stroke', wireColors[leftId]);
+                    line.setAttribute('stroke-width', '5');
+                    line.setAttribute('stroke-linecap', 'round');
+                    svg.appendChild(line);
+                }
+            }
+        }
+
+        function resetWires() {
+            if (state.wiresFixed) return;
+            wireConnections['L1'] = null;
+            wireConnections['L2'] = null;
+            wireConnections['L3'] = null;
+            wireConnections['L4'] = null;
+            wireConnections['L5'] = null;
+            activeWire = null;
+            document.querySelectorAll('.left-node').forEach(n => n.classList.remove('node-selected'));
+            drawWires();
+        }
+
+        function checkWires() {
+            const connectedCount = Object.values(wireConnections).filter(v => v !== null).length;
+
+            // Deductive Logic Target Solution:
+            // White (1) ➔ RE
+            // Yellow (2) ➔ RD
+            // Blue (3) ➔ RC
+            // Green (4) ➔ RB
+            // Red (5) ➔ RA
+            const isCorrect = (
+                wireConnections['L1'] === 'RE' && 
+                wireConnections['L2'] === 'RD' && 
+                wireConnections['L3'] === 'RC' && 
+                wireConnections['L4'] === 'RB' && 
+                wireConnections['L5'] === 'RA'
+            );
+
+            if (isCorrect) {
+                state.wiresFixed = true;
+                setTimeout(() => {
+                    closeModals();
+                    // Power restored! But table lamp is intentionally left off until clicked
+                    showStatus("The power hums! You restored electricity to the grid.");
+                }, 500);
+            } else if (connectedCount === 5) {
+                // All slots wired but incorrect -> Shock and auto-reset
+                setTimeout(() => {
+                    triggerShock();
+                }, 500);
+            }
         }
     </script>
 </body>

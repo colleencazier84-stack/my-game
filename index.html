@@ -653,18 +653,6 @@
         }
         .numpad-btn:active { background: #1e293b; }
 
-        /* Wire Puzzle Nodes */
-        .wire-node {
-            width: 24px; height: 24px;
-            border-radius: 50%;
-            border: 3px solid #334155;
-            cursor: pointer;
-            box-shadow: 0 0 5px rgba(0,0,0,0.5);
-            transition: transform 0.1s;
-        }
-        .wire-node:active { transform: scale(0.9); }
-        .node-selected { border-color: #f8fafc; box-shadow: 0 0 10px white; }
-
         /* Organic clickable crack - pushed deep into the bottom-left corner of the modal content card container */
         .ns-crack {
             position: absolute;
@@ -859,6 +847,17 @@
             50% { transform: scale(1.15); filter: drop-shadow(0 0 40px #fef08a); }
         }
 
+        /* Modal elevated depth fixes for the electrical panel closeup */
+        #wires-modal {
+            z-index: 200; /* Placed cleanly above the raised inventory bar (150) */
+        }
+
+        /* Interactive active wire nodes highlighting */
+        .wire-node.node-selected {
+            border-color: #f8fafc !important;
+            box-shadow: 0 0 10px white, inset 0 0 5px white;
+        }
+
     </style>
 </head>
 <body>
@@ -966,7 +965,7 @@
                     <div class="desk-drawer-mini">
                         <div class="absolute right-2 top-1/2 transform -translate-y-1/2 flex flex-col items-center opacity-80">
                             <div class="w-1.5 h-1.5 bg-black rounded-full"></div>
-                            <div class="w-1 h-1.5 bg-black -mt-0.5"></div>
+                            <div class="w-1.5 h-1.5 bg-black -mt-0.5"></div>
                         </div>
                     </div>
                     <div class="desk-drawer-mini"></div>
@@ -988,7 +987,7 @@
                 <div id="hidden-key" class="interactable absolute flex items-center justify-center" onclick="interact('key', event)" style="bottom: 21%; left: 56%; font-size: 2.5rem; display: none; z-index: 12; text-shadow: 0 0 15px #fbbf24; transform: rotate(15deg);">🔑</div>
                 
                 <!-- Hidden Door Outline Container -->
-                <div id="tapestry-engraving" class="absolute opacity-0 transition-opacity duration-500 flex flex-col items-center justify-center overflow-hidden" style="top: 8%; left: 50%; margin-left: -110px; width: 220px; height: 320px; border: 4px dashed #334155; border-bottom: none; border-radius: 110px 110px 0 0; background: rgba(0,0,0,0.2);" onclick="interact('tapestry-door', event)">
+                <div id="tapestry-engraving" class="absolute opacity-0 transition-opacity duration-500 flex flex-col items-center justify-center overflow-hidden pointer-events-none" style="top: 8%; left: 50%; margin-left: -110px; width: 220px; height: 320px; border: 4px dashed #334155; border-bottom: none; border-radius: 110px 110px 0 0; background: rgba(0,0,0,0.2);" onclick="interact('tapestry-door', event)">
                     <!-- Canvas Drawing Overlay for Magical Chalk sketch effect -->
                     <svg id="chalk-draw-svg" class="absolute inset-0 w-full h-full pointer-events-none hidden" viewBox="0 0 220 320">
                         <path id="chalk-path" class="drawn-door-path" d="M10,320 V110 A100,100 0 0,1 210,110 V320" fill="none" stroke="#e0f2fe" stroke-width="6" stroke-linecap="round" />
@@ -1212,7 +1211,7 @@
         <div id="lockbox-modal" class="modal-overlay" onclick="closeModals()">
             <div class="modal-content" onclick="event.stopPropagation()">
                 <div class="close-btn" onclick="closeModals()">X</div>
-                <h3 class="text-xl text-slate-300 mb-2 uppercase">Lockbox</h3>
+                <h3 class="text-xl text-slate-300 mb-2 uppercase font-bold">Lockbox</h3>
                 <div class="combo-box">
                     <div id="digit-1" class="digit-btn" onclick="cycleDigit(1)">0</div>
                     <div id="digit-2" class="digit-btn" onclick="cycleDigit(2)">0</div>
@@ -1233,7 +1232,7 @@
         <div id="safe-modal" class="modal-overlay" onclick="closeModals()">
             <div class="modal-content" style="max-width: 300px;" onclick="event.stopPropagation()">
                 <div class="close-btn" onclick="closeModals()">X</div>
-                <h3 class="text-lg text-slate-300 mb-2 uppercase tracking-widest">Safe Combination</h3>
+                <h3 class="text-lg text-slate-300 mb-2 uppercase tracking-widest font-bold">Safe Combination</h3>
                 <div id="safe-display" class="bg-slate-900 text-amber-500 font-mono text-3xl py-3 rounded tracking-[0.5em] mb-4 h-16 flex items-center justify-center border border-slate-700">
                     ----
                 </div>
@@ -1255,7 +1254,7 @@
 
         <!-- Skewed Occult Handwritten Note Modal -->
         <div id="note-modal" class="modal-overlay" onclick="closeModals()">
-            <div id="note-paper" class="w-[85vw] max-w-sm p-8 rounded shadow-2xl relative border-amber-900 text-center flex flex-col items-center justify-center" onclick="event.stopPropagation()">
+            <div id="note-paper" class="w-[85vw] max-w-sm p-8 rounded shadow-2xl relative border-amber-950 text-center flex flex-col items-center justify-center" onclick="event.stopPropagation()">
                 <div class="close-btn" onclick="closeModals()">X</div>
                 <div class="parchment-border"></div>
                 <!-- Obscure Occult Diagrams (Stars, Moon, Eye) -->
@@ -1283,13 +1282,13 @@
 
         <!-- Wires Puzzle Modal -->
         <div id="wires-modal" class="modal-overlay" onclick="closeModals()">
-            <div class="bg-slate-800 p-6 rounded-xl border-4 border-slate-600 w-[95vw] max-w-2xl relative" onclick="event.stopPropagation()">
+            <div class="bg-slate-800 p-6 rounded-xl border-4 border-slate-600 w-[95vw] max-w-2xl relative animate-fade-in" onclick="event.stopPropagation()">
                 <div class="close-btn" onclick="closeModals()">X</div>
-                <h3 class="text-xl text-slate-200 mb-4 uppercase tracking-widest text-center">Electrical Panel</h3>
+                <h3 class="text-xl text-slate-200 mb-4 uppercase tracking-widest text-center select-none font-bold">Electrical Panel</h3>
                 
                 <div class="flex flex-col md:flex-row gap-6">
                     <!-- Left: Door Schematic acting as the logical puzzle legend -->
-                    <div class="flex-1 bg-slate-900 p-4 border-2 border-slate-700 rounded text-slate-300 font-mono text-xs flex flex-col justify-between">
+                    <div class="flex-1 bg-slate-900 p-4 border-2 border-slate-700 rounded text-slate-300 font-mono text-xs flex flex-col justify-between select-none">
                         <div>
                             <div class="text-amber-400 font-bold border-b border-slate-700 pb-2 mb-2 text-center uppercase tracking-wider">Wiring Schematic</div>
                             <p class="text-[11px] leading-relaxed mb-3">
@@ -1310,62 +1309,62 @@
                     </div>
                     
                     <!-- Right: Interactive Patch Bay -->
-                    <div class="flex-1 flex flex-col justify-between font-sans">
-                        <!-- Use pointer-events-auto and separate handlers to protect wire drawing -->
-                        <div id="wire-container" class="relative w-full h-72 bg-slate-950 border-2 border-slate-700 rounded flex justify-between px-4 py-4">
+                    <div class="flex-grow flex flex-col justify-between font-sans">
+                        <!-- Use pointer-events-auto and relative coordinate calculations to protect wire drawing -->
+                        <div id="wire-container" class="relative w-full h-72 bg-slate-950 border-2 border-slate-700 rounded flex justify-between px-4 py-4 pointer-events-auto">
                             <svg id="wire-svg" class="absolute inset-0 w-full h-full pointer-events-none z-10"></svg>
                             
-                            <!-- Left Nodes (Inputs 1-5) -->
+                            <!-- Left Nodes (Inputs 1-5 with guaranteed shrink-0 width/height) -->
                             <div class="flex flex-col justify-between h-full z-20">
                                 <div class="flex items-center gap-2">
-                                    <div class="wire-node left-node bg-white" id="node-L1" onclick="selectWire('L1', event)"></div>
+                                    <div class="w-6 h-6 rounded-full cursor-pointer shrink-0 border-2 border-slate-300 bg-white left-node hover:scale-110 transition-transform" id="node-L1" onclick="selectWire('L1', event)"></div>
                                     <span class="text-[10px] font-mono text-slate-400 select-none">1</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <div class="wire-node left-node bg-yellow-400" id="node-L2" onclick="selectWire('L2', event)"></div>
+                                    <div class="w-6 h-6 rounded-full cursor-pointer shrink-0 border-2 border-slate-500 bg-yellow-400 left-node hover:scale-110 transition-transform" id="node-L2" onclick="selectWire('L2', event)"></div>
                                     <span class="text-[10px] font-mono text-slate-400 select-none">2</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <div class="wire-node left-node bg-blue-500" id="node-L3" onclick="selectWire('L3', event)"></div>
+                                    <div class="w-6 h-6 rounded-full cursor-pointer shrink-0 border-2 border-slate-700 bg-blue-500 left-node hover:scale-110 transition-transform" id="node-L3" onclick="selectWire('L3', event)"></div>
                                     <span class="text-[10px] font-mono text-slate-400 select-none">3</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <div class="wire-node left-node bg-green-500" id="node-L4" onclick="selectWire('L4', event)"></div>
+                                    <div class="w-6 h-6 rounded-full cursor-pointer shrink-0 border-2 border-slate-700 bg-green-500 left-node hover:scale-110 transition-transform" id="node-L4" onclick="selectWire('L4', event)"></div>
                                     <span class="text-[10px] font-mono text-slate-400 select-none">4</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <div class="wire-node left-node bg-red-500" id="node-L5" onclick="selectWire('L5', event)"></div>
+                                    <div class="w-6 h-6 rounded-full cursor-pointer shrink-0 border-2 border-slate-700 bg-red-500 left-node hover:scale-110 transition-transform" id="node-L5" onclick="selectWire('L5', event)"></div>
                                     <span class="text-[10px] font-mono text-slate-400 select-none">5</span>
                                 </div>
                             </div>
 
-                            <!-- Right Nodes (Outputs A-E) -->
+                            <!-- Right Nodes (Outputs A-E with guaranteed shrink-0 width/height) -->
                             <div class="flex flex-col justify-between h-full z-20 items-end">
                                 <div class="flex items-center gap-2">
                                     <span class="text-[10px] font-mono text-slate-400 select-none">A</span>
-                                    <div class="wire-node right-node bg-slate-600" id="node-RA" onclick="connectWire('RA', event)"></div>
+                                    <div class="w-6 h-6 rounded-full cursor-pointer shrink-0 border-2 border-slate-500 bg-slate-700 right-node hover:scale-110 transition-transform" id="node-RA" onclick="connectWire('RA', event)"></div>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <span class="text-[10px] font-mono text-slate-400 select-none">B</span>
-                                    <div class="wire-node right-node bg-slate-600" id="node-RB" onclick="connectWire('RB', event)"></div>
+                                    <div class="w-6 h-6 rounded-full cursor-pointer shrink-0 border-2 border-slate-500 bg-slate-700 right-node hover:scale-110 transition-transform" id="node-RB" onclick="connectWire('RB', event)"></div>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <span class="text-[10px] font-mono text-slate-400 select-none">C</span>
-                                    <div class="wire-node right-node bg-slate-600" id="node-RC" onclick="connectWire('RC', event)"></div>
+                                    <div class="w-6 h-6 rounded-full cursor-pointer shrink-0 border-2 border-slate-500 bg-slate-700 right-node hover:scale-110 transition-transform" id="node-RC" onclick="connectWire('RC', event)"></div>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <span class="text-[10px] font-mono text-slate-400 select-none">D</span>
-                                    <div class="wire-node right-node bg-slate-600" id="node-RD" onclick="connectWire('RD', event)"></div>
+                                    <div class="w-6 h-6 rounded-full cursor-pointer shrink-0 border-2 border-slate-500 bg-slate-700 right-node hover:scale-110 transition-transform" id="node-RD" onclick="connectWire('RD', event)"></div>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <span class="text-[10px] font-mono text-slate-400 select-none">E</span>
-                                    <div class="wire-node right-node bg-slate-600" id="node-RE" onclick="connectWire('RE', event)"></div>
+                                    <div class="w-6 h-6 rounded-full cursor-pointer shrink-0 border-2 border-slate-500 bg-slate-700 right-node hover:scale-110 transition-transform" id="node-RE" onclick="connectWire('RE', event)"></div>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="flex justify-between items-center mt-4">
-                            <span class="text-xs text-slate-400 select-none">Click a left terminal, then click a target letter.</span>
+                        <div class="flex justify-between items-center mt-4 select-none">
+                            <span class="text-xs text-slate-400">Click a left terminal, then click a target letter.</span>
                             <button class="px-4 py-1.5 bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold rounded transition" onclick="resetWires()">Reset</button>
                         </div>
                     </div>
@@ -1400,7 +1399,7 @@
                         <div class="absolute inset-0" style="background: radial-gradient(circle at 50% 50%, rgba(148, 163, 184, 0.15) 0%, rgba(15, 23, 42, 0.95) 85%);"></div>
                         
                         <!-- Magical Piece of Chalk hiding in clean/lit vent shaft -->
-                        <div id="chalk-item" class="absolute text-3xl cursor-pointer select-none transition-all duration-500 opacity-0 scale-0 z-10 p-2 rounded-full" style="top: 40%; left: calc(50% - 20px); filter: drop-shadow(0 0 10px #38bdf8);" onclick="interact('take-chalk', event)">🖍️</div>
+                        <div id="chalk-item" class="absolute text-3xl cursor-pointer select-none transition-all duration-500 opacity-0 scale-0 z-10 p-2 rounded-full" style="top: 40%; left: calc(50% - 24px); filter: drop-shadow(0 0 10px #38bdf8);" onclick="interact('take-chalk', event)">🖍️</div>
 
                         <!-- High-fidelity custom SVG Cobwebs -->
                         <svg id="procedural-cobwebs" class="absolute inset-0 w-full h-full opacity-40 pointer-events-none transition-opacity duration-700" viewBox="0 0 100 100">
@@ -1750,7 +1749,7 @@
                 showStatus("Deselected item.");
             } else {
                 state.selectedItemIndex = index;
-                showStatus(`Selected: ${state.inventory[index].name}`);
+                showStatus("Selected: " + state.inventory[index].name);
                 
                 // Immediately check if the item is inspectable and show the written page modal
                 inspectItem(index + 1);
@@ -1763,7 +1762,7 @@
             if (event) event.stopPropagation();
             showMessage(`
                 <span class='text-emerald-400 font-bold text-4xl block mb-4 tracking-wider animate-bounce'>VICTORY!</span>
-                <p class='text-lg text-slate-200 mb-6 leading-relaxed max-w-md mx-auto'>
+                <p class='text-lg text-slate-200 mb-6 leading-relaxed max-w-md mx-auto font-sans'>
                     Step forward out into the brilliant, fresh mountain air! You sketched a magical doorway in the chalk of legend, dissolved the ancient stone vault, and escaped the room forever.
                 </p>
                 <div class='mt-6 text-yellow-500 font-mono text-sm tracking-widest uppercase animate-pulse'>
@@ -1805,7 +1804,7 @@
 
                 case 'electrical-box':
                     document.getElementById('wires-modal').style.display = 'flex';
-                    setTimeout(drawWires, 50); // Small delay to let the modal layout load
+                    setTimeout(drawWires, 100); // Wait for modal flex rendering to stabilize bounding box offsets
                     break;
                     
                 case 'nightstand':
@@ -2056,11 +2055,17 @@
                     const engraving = document.getElementById('tapestry-engraving');
                     if (state.tapestryMoved) {
                         tapestryEl.style.transform = 'translateX(-140%) rotate(-15deg) skewY(-5deg)';
-                        if (engraving) engraving.style.opacity = '1';
+                        if (engraving) {
+                            engraving.style.opacity = '1';
+                            engraving.style.pointerEvents = 'auto'; // Re-enable pointer events on reveal
+                        }
                         showStatus("You pull the heavy tapestry aside, revealing a faint, scratched outline of a hidden door in the stone wall.");
                     } else {
                         tapestryEl.style.transform = 'none';
-                        if (engraving) engraving.style.opacity = '0';
+                        if (engraving) {
+                            engraving.style.opacity = '0';
+                            engraving.style.pointerEvents = 'none'; // Disable pointer events on return
+                        }
                         showStatus("You place the tapestry back.");
                     }
                     break;
@@ -2352,7 +2357,7 @@
             svg.innerHTML = '';
             const container = document.getElementById('wire-container');
             if (!container) return;
-            const cRect = container.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
             
             for (let leftId in wireConnections) {
                 const rightId = wireConnections[leftId];
@@ -2360,14 +2365,15 @@
                     const lNode = document.getElementById(`node-${leftId}`);
                     const rNode = document.getElementById(`node-${rightId}`);
                     if (!lNode || !rNode) continue;
+                    
                     const lRect = lNode.getBoundingClientRect();
                     const rRect = rNode.getBoundingClientRect();
                     
-                    // Calculate center points of the nodes relative to the SVG canvas
-                    const x1 = lRect.left - cRect.left + lRect.width/2;
-                    const y1 = lRect.top - cRect.top + lRect.height/2;
-                    const x2 = rRect.left - cRect.left + rRect.width/2;
-                    const y2 = rRect.top - cRect.top + rRect.height/2;
+                    // Calculate exact coordinates relative to `#wire-container` canvas
+                    const x1 = lRect.left - containerRect.left + lRect.width / 2;
+                    const y1 = lRect.top - containerRect.top + lRect.height / 2;
+                    const x2 = rRect.left - containerRect.left + rRect.width / 2;
+                    const y2 = rRect.top - containerRect.top + rRect.height / 2;
                     
                     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
                     line.setAttribute('x1', x1);
